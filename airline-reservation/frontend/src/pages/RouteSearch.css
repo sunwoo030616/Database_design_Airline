@@ -1,0 +1,64 @@
+.route-search-container {
+  max-width: 700px;
+  margin: 40px auto;
+  font-family: sans-serif;
+}
+
+.input-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-box input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.input-box button {
+  padding: 10px 15px;
+  background-color: #3178f2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.result-box {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f6f6f6;
+}
+
+.flight-card {
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.path-box {
+  margin-top: 20px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #3178f2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-weight: bold;
+}

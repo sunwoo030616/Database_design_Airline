@@ -1,0 +1,115 @@
+.seat-container {
+  padding: 40px;
+  text-align: center;
+}
+
+/* 🎫 항공권 헤더 */
+.ticket-header {
+  width: 60%;
+  margin: 0 auto 20px auto;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+
+.airport .code {
+  font-size: 40px;
+  font-weight: 800;
+  color: #013A63;
+}
+
+.airport .city {
+  font-size: 14px;
+  color: #4DB6E2;
+}
+
+.plane-icon {
+  font-size: 28px;
+  color: #4DB6E2;
+}
+
+/* 상세 정보 */
+.flight-detail {
+  width: 50%;
+  margin: 0 auto 30px auto;
+  padding: 20px 30px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.08);
+  font-size: 17px;
+  color: #013A63;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.seat-title {
+  margin-top: 20px;
+  font-size: 22px;
+  color: #013A63;
+  font-weight: 700;
+}
+
+/* 좌석 그리드 */
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: 60%;
+  margin: 0 auto;
+  gap: 14px;
+  padding: 25px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.seat {
+  padding: 14px 0;
+  border-radius: 12px;
+  background: #E7F6FF;
+  color: #013A63;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.seat:hover {
+  background: #4DB6E2;
+  color: white;
+}
+
+/* 예약됨 */
+.seat.booked {
+  background: #c4c4c4;
+  color: #7a7a7a;
+  cursor: not-allowed;
+}
+
+/* 선택됨 */
+.seat.selected {
+  background: #013A63;
+  color: white;
+  border: 2px solid #4DB6E2;
+}
+
+/* 버튼 */
+.next-btn {
+  background: #4DB6E2;
+  border: none;
+  color: white;
+  padding: 16px 40px;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 30px;
+  transition: 0.2s;
+}
+
+.next-btn:hover {
+  background: #3aa6d8;
+}

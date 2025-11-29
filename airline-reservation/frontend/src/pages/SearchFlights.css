@@ -1,0 +1,168 @@
+.search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 상단 배너 카드 */
+.hero-card {
+  background: linear-gradient(135deg, #4DB6E2, #8FD3F7);
+  border-radius: 20px;
+  padding: 24px 28px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+.hero-text h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+}
+
+.hero-text p {
+  margin: 0;
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+.hero-badge {
+  background: rgba(255,255,255,0.14);
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-size: 13px;
+  text-align: right;
+}
+
+/* 검색 박스 */
+.search-box {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #5b6b7a;
+}
+
+.field-group input {
+  width: 180px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  font-size: 14px;
+}
+
+/* 검색 버튼 */
+.search-btn {
+  background: var(--sky-blue);
+  color: white;
+  border: none;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: auto;
+  min-width: 120px;
+  box-shadow: 0 6px 14px rgba(77, 182, 226, 0.5);
+}
+
+.search-btn:hover {
+  background: #3aa6d8;
+}
+
+/* 항공편 카드 리스트 */
+.flight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.empty-text {
+  font-size: 14px;
+  color: #7b8ba1;
+}
+
+/* 개별 항공편 카드 */
+.flight-card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.flight-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.fc-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fc-route {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.fc-airport {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #E6F6FF;
+  color: var(--navy);
+  font-size: 14px;
+}
+
+.fc-arrow {
+  margin: 0 8px;
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.fc-time {
+  font-size: 13px;
+  color: #7b8ba1;
+}
+
+/* 오른쪽 (가격/버튼) */
+.fc-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fc-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--sky-blue);
+}
+
+.fc-btn {
+  background: var(--navy);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+}

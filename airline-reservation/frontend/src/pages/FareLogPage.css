@@ -1,0 +1,29 @@
+.farelog-container {
+  max-width: 800px;
+  margin: 40px auto;
+  font-family: Arial, sans-serif;
+}
+
+.filter-box {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.farelog-card {
+  padding: 15px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.event-new {
+  color: green;
+  font-weight: bold;
+}
+
+.event-cancel {
+  color: red;
+  font-weight: bold;
+}

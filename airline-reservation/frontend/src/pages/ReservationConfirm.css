@@ -1,0 +1,61 @@
+.confirm-container {
+  padding: 40px;
+  text-align: center;
+}
+
+.ticket-card {
+  width: 50%;
+  margin: 0 auto 30px auto;
+  padding: 28px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.route {
+  font-size: 32px;
+  font-weight: 800;
+  color: #013A63;
+  margin-bottom: 12px;
+}
+
+.route .airport {
+  padding: 0 12px;
+}
+
+.arrow {
+  margin: 0 10px;
+  color: #4DB6E2;
+}
+
+.time, .seat, .price {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #013A63;
+}
+
+.payment-box {
+  margin-top: 25px;
+}
+
+.payment-box select {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #D5E4F0;
+  font-size: 15px;
+}
+
+.pay-btn {
+  margin-top: 30px;
+  padding: 16px 40px;
+  border-radius: 14px;
+  background: #4DB6E2;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.pay-btn:hover {
+  background: #3aa6d8;
+}
