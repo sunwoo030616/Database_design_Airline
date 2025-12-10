@@ -108,6 +108,7 @@
   box-shadow: 0 3px 12px rgba(0,0,0,0.05);
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border: 1px solid var(--border-light);
 }
 
 .flight-card:hover {
@@ -124,6 +125,9 @@
 .fc-route {
   font-size: 20px;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .fc-airport {
@@ -145,6 +149,84 @@
   color: #7b8ba1;
 }
 
+/* 상태 배지 */
+.fc-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid var(--border-light);
+}
+
+.badge.status {
+  background: #eef7ff;
+  color: #0a5fd6;
+}
+
+.badge.aircraft {
+  background: #f7faff;
+  color: #3e4a5b;
+}
+
+.fc-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 10px 0;
+}
+
+.fc-meta .fc-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* 라벨/칩 스타일 */
+.fc-rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  margin-top: 8px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7c92;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f4f8ff;
+  border: 1px solid var(--border-light);
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #132a4a;
+}
+
+.chip .icon {
+  font-size: 14px;
+  color: #1b5cd8;
+}
+
+.fc-summary {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #4b5b72;
+}
+
 /* 오른쪽 (가격/버튼) */
 .fc-right {
   display: flex;
@@ -156,6 +238,8 @@
   font-size: 20px;
   font-weight: 700;
   color: var(--sky-blue);
+  min-width: 140px;
+  text-align: right;
 }
 
 .fc-btn {
@@ -165,6 +249,7 @@
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 13px;
+  box-shadow: 0 6px 14px rgba(13, 40, 80, 0.2);
 }
 
 .route-grid {

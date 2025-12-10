@@ -132,25 +132,40 @@ export default function SearchFlights() {
                   <span className="fc-arrow">➜</span>
                   <span className="fc-airport">{f.route.destination.airport_code}</span>
                 </div>
+                <div className="fc-badges">
+                  {f.status && (<span className="badge status">{f.status}</span>)}
+                  {f.aircraft && (<span className="badge aircraft">Aircraft {f.aircraft}</span>)}
+                </div>
                 <div className="fc-meta">
                   <div className="fc-line">
                     <strong>Flight #{f.flight_id}</strong>
-                    {f.status ? ` · ${f.status}` : ''}
-                    {f.aircraft ? ` · Aircraft ${f.aircraft}` : ''}
                   </div>
-                  <div className="fc-line">
-                    출발 {f.departure_time.slice(0, 16)} · 도착 {f.arrival_time.slice(0, 16)}
+                  <div className="fc-rows">
+                    <div>
+                      <div className="label">출발</div>
+                      <div className="chip"><span className="icon">🛫</span>{f.departure_time.slice(0, 16)}</div>
+                    </div>
+                    <div>
+                      <div className="label">도착</div>
+                      <div className="chip"><span className="icon">🛬</span>{f.arrival_time.slice(0, 16)}</div>
+                    </div>
+                    <div>
+                      <div className="label">소요시간</div>
+                      <div className="chip"><span className="icon">⏱</span>{f.route.base_duration} 분</div>
+                    </div>
+                    <div>
+                      <div className="label">거리</div>
+                      <div className="chip"><span className="icon">📏</span>{Number(f.route.distance).toLocaleString()} km</div>
+                    </div>
                   </div>
-                  <div className="fc-line">
-                    예상 소요 {f.route.base_duration}분 · 거리 {Number(f.route.distance).toLocaleString()} km
+                  <div className="fc-summary">
+                    {f.route.origin.city} → {f.route.destination.city}
                   </div>
                 </div>
               </div>
 
               <div className="fc-right">
-                <div className="fc-price">
-                  ₩ {Number(f.current_fare).toLocaleString()}
-                </div>
+                <div className="fc-price">₩ {Number(f.current_fare).toLocaleString()}</div>
                 <button className="fc-btn">좌석 선택</button>
               </div>
             </div>
