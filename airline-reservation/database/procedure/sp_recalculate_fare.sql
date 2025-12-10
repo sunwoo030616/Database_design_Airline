@@ -77,7 +77,7 @@ BEGIN
     -- 4. 최종 요금 계산: base_fare * 점유율 요인 * 시간 요인
     SET v_new_fare = ROUND(v_base_fare * v_occ_factor * v_time_factor, 2);
 
-    -- 5. 변경이 있을 때만 업데이트 + 로그
+    -- 5. 변경 시 업데이트 + 로그, 변경 없더라도 취소 이벤트는 로그 남김
     IF v_new_fare <> v_old_fare THEN
         UPDATE Flight
            SET current_fare = v_new_fare
@@ -87,6 +87,12 @@ BEGIN
             (flight_id, resv_id, old_fare, new_fare, change_time, trigger_event)
         VALUES
             (p_flight_id, p_resv_id, v_old_fare, v_new_fare, NOW(), p_trigger_event);
+    ELSEIF p_trigger_event = 'CANCEL_RESERVATION' THEN
+        -- 취소로 점유율만 변경되어 요금 변동이 없더라도 이벤트 기록
+        INSERT INTO DynamicFareLog
+            (flight_id, resv_id, old_fare, new_fare, change_time, trigger_event)
+        VALUES
+            (p_flight_id, p_resv_id, v_old_fare, v_old_fare, NOW(), p_trigger_event);
     END IF;
 END$$
 

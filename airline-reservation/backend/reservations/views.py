@@ -25,15 +25,8 @@ def create_reservation(request):
     flight = Flight.objects.get(pk=flight_id)
     amount = flight.current_fare
 
-    # ★ (2) 좌석 중복 체크 — 취소되지 않은 예약이 있으면 막기
-    if Reservation.objects.filter(
-        flight_id=flight_id,
-        seat_no=seat_no
-    ).exclude(status='CANCELLED').exists():
-        return Response(
-            {'detail': '이미 예약된 좌석입니다.'},
-            status=400
-        )
+    # ★ (2) 좌석 중복 체크는 엄격 프로시저에서 좌석 상태(Seat.status)로 판별
+    # 프리체크를 제거하여 Seat가 AVAILABLE인 케이스에서 잘못된 차단을 방지합니다.
 
     try:
         with transaction.atomic():

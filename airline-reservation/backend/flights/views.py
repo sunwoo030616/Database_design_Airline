@@ -68,6 +68,29 @@ def flight_seat_info(request, flight_id):
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([AllowAny])
+def flight_available_seats(request, flight_id):
+    """
+    특정 항공편의 가용 좌석(AVAILABLE) 개수와 목록 반환
+    GET /api/flights/<flight_id>/available-seats/
+    """
+    try:
+        flight = Flight.objects.select_related('aircraft').get(flight_id=flight_id)
+    except Flight.DoesNotExist:
+        return Response({"detail": "존재하지 않는 항공편"}, status=404)
+
+    aircraft_id = flight.aircraft.aircraft_id
+    seats = Seat.objects.filter(aircraft_id=aircraft_id, status='AVAILABLE').values('seat_no', 'seat_class', 'status')
+
+    return Response({
+        "flight_id": flight_id,
+        "aircraft_id": aircraft_id,
+        "available_count": seats.count(),
+        "seats": list(seats)
+    })
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
 def min_distance_route(request):
     origin = request.GET.get("origin")
     destination = request.GET.get("destination")

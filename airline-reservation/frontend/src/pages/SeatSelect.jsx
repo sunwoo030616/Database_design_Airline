@@ -91,8 +91,8 @@ export default function SeatSelect() {
         ))}
       </div>
 
-      <button className="next-btn" onClick={handleNext}>
-        결제 단계로 이동
+      <button className="next-btn" onClick={handleNext} disabled={!selectedSeat}>
+        {selectedSeat ? "결제 단계로 이동" : "좌석 선택 필요"}
       </button>
     </div>
   );
