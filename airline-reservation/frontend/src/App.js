@@ -11,6 +11,7 @@ import ReservationConfirm from "./pages/ReservationConfirm";
 import MyPage from "./pages/MyPage";
 import FareLogPage from "./pages/FareLogPage";
 import RouteSearch from "./pages/RouteSearch";
+import RevenueAnalytics from "./pages/RevenueAnalytics";
 
 
 
@@ -29,7 +30,8 @@ function App() {
           <Route path="/reservation/confirm" element={<ReservationConfirm />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/fare-log" element={<FareLogPage />} />
-          <Route path="/route-search" element={<RouteSearch />} />
+          <Route path="/routes" element={<RouteSearch />} />
+          <Route path="/analytics/revenue" element={<RevenueAnalytics />} />
 
         </Routes>
       </div>

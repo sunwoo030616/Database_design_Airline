@@ -32,13 +32,12 @@ class DynamicFareLog(models.Model):
 
 
 class RevenueAnalysis(models.Model):
-    # 실제 스키마에 맞게 필드 수정
-    id = models.AutoField(primary_key=True)
-    route = models.ForeignKey('flights.Route', on_delete=models.PROTECT)
-    flight_date = models.DateField()
+    analysis_id = models.AutoField(primary_key=True, db_column='analysis_id')
+    route = models.ForeignKey('flights.Route', db_column='route_id', on_delete=models.PROTECT)
+    aircraft = models.ForeignKey('flights.Aircraft', db_column='aircraft_id', on_delete=models.PROTECT)
+    month = models.DateField()
+    seat_class = models.CharField(max_length=20)
     total_revenue = models.DecimalField(max_digits=12, decimal_places=2)
-    total_seats = models.IntegerField()
-    sold_seats = models.IntegerField()
 
     class Meta:
         managed = False

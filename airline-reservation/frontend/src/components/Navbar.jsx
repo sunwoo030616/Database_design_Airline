@@ -22,6 +22,13 @@ export default function Navbar() {
 
       <div className="nav-menu">
         <Link to="/">항공편 검색</Link>
+        <Link to="/routes">경로 검색</Link>
+        {member && member.user_type === 'admin' && (
+          <>
+            <Link to="/fare-log">요금 변경 로그</Link>
+            <Link to="/analytics/revenue">매출 분석</Link>
+          </>
+        )}
         <Link to="/mypage">마이페이지</Link>
         {member ? (
           <>

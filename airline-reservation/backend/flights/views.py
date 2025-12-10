@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
@@ -10,6 +11,8 @@ from .serializers import FlightSerializer
 
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
 def flight_list(request):
     """
     GET /api/flights/?origin=ICN&destination=LAX&date=2025-12-01
@@ -33,6 +36,8 @@ def flight_list(request):
 from django.db import connection
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
 def flight_seat_info(request, flight_id):
     """
     특정 항공편의 좌석 리스트 + 항공편 정보 반환
@@ -61,6 +66,8 @@ def flight_seat_info(request, flight_id):
     })
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
 def min_distance_route(request):
     origin = request.GET.get("origin")
     destination = request.GET.get("destination")
@@ -118,3 +125,14 @@ def min_distance_route(request):
         "total_distance": row[1],
         "stops": row[2]
     })
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def route_list(request):
+    from .models import Route
+    from .serializers import RouteSerializer
+
+    routes = Route.objects.select_related('origin', 'destination').all()
+    serializer = RouteSerializer(routes, many=True)
+    return Response(serializer.data)

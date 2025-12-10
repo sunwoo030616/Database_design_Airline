@@ -7,6 +7,18 @@ export default function MyPage() {
   const [reservations, setReservations] = useState([]);
   const memberId = localStorage.getItem("member_id");
 
+  const formatAirport = (airport) => {
+    if (!airport) return "-";
+    // Backend may return string code or airport object
+    if (typeof airport === "string") return airport;
+    const code = airport.airport_code || airport.code || airport.id || "";
+    const name = airport.airport_name || airport.name || "";
+    const city = airport.city || "";
+    const country = airport.country || "";
+    // Prefer concise representation
+    return code || name || [city, country].filter(Boolean).join(", ") || "-";
+  };
+
   const fetchReservations = () => {
     api
       .get("/reserve/my/", { params: { member_id: memberId } })
@@ -43,10 +55,18 @@ export default function MyPage() {
         <p style={{ marginTop: "20px" }}>예약 내역이 없습니다.</p>
       )}
 
-      {reservations.map((r) => (
+      {[...reservations]
+        .sort((a, b) => {
+          const ta = new Date(a?.flight?.departure_time || a?.created_at || 0).getTime();
+          const tb = new Date(b?.flight?.departure_time || b?.created_at || 0).getTime();
+          return tb - ta; // 최신순
+        })
+        .map((r) => (
         <div key={r.resv_id} className="reservation-card">
           <h2>예약번호 #{r.resv_id}</h2>
-          <p><strong>노선:</strong> {r.flight.route.origin} → {r.flight.route.destination}</p>
+          <p>
+            <strong>노선:</strong> {formatAirport(r?.flight?.route?.origin)} → {formatAirport(r?.flight?.route?.destination)}
+          </p>
           <p><strong>출발:</strong> {r.flight.departure_time}</p>
           <p><strong>좌석:</strong> {r.seat_no}</p>
           <p><strong>상태:</strong> {r.status}</p>

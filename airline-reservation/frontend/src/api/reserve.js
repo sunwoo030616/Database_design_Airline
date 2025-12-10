@@ -1,7 +1,7 @@
 import api from "./axios";
 
 export const createReservation = (flight_id, seat_no, payment_method, member_id) =>
-  api.post("reserve/", {
+  api.post("/reserve/", {
     flight_id,
     seat_no,
     payment_method,

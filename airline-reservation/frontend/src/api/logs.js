@@ -1,7 +1,9 @@
 import api from "./axios";
 
-// 전체 로그 또는 특정 flight_id 로그
-export const fetchFareLogs = (flightId = null) =>
-  api.get("/admin/fare-log/", {
-    params: { flight_id: flightId }
-  });
+// Fetch dynamic fare logs. If flightId provided, filter by it.
+export const fetchFareLogs = (flightId = null) => {
+  const params = {};
+  if (flightId) params.flight_id = flightId;
+  // Backend exposes fare log under /api/admin/fare-log/
+  return api.get("/admin/fare-log/", { params });
+};

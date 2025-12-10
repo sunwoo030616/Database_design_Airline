@@ -166,3 +166,58 @@
   border-radius: 999px;
   font-size: 13px;
 }
+
+.route-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  margin-top: 20px;
+}
+
+.route-card {
+  padding: 20px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff, #f2f7ff);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.25s ease;
+  cursor: pointer;
+}
+
+.route-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+}
+
+.route-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.airport {
+  text-align: center;
+}
+
+.airport .city {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0a2d5b;
+}
+
+.airport .code {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1b5cd8;
+}
+
+.arrow {
+  font-size: 26px;
+  color: #3697ff;
+}
+
+.route-info {
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+}

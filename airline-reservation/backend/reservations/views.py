@@ -25,12 +25,11 @@ def create_reservation(request):
     flight = Flight.objects.get(pk=flight_id)
     amount = flight.current_fare
 
-    # ★ (2) 좌석 중복 체크 — 여기 넣으면 됨!!
+    # ★ (2) 좌석 중복 체크 — 취소되지 않은 예약이 있으면 막기
     if Reservation.objects.filter(
         flight_id=flight_id,
-        seat_no=seat_no,
-        status='BOOKED'
-    ).exists():
+        seat_no=seat_no
+    ).exclude(status='CANCELLED').exists():
         return Response(
             {'detail': '이미 예약된 좌석입니다.'},
             status=400
@@ -61,8 +60,21 @@ def create_reservation(request):
         )
 
     except Exception as e:
-        print("🔥 DB ERROR:", e)
-        return Response({'detail': str(e)}, status=400)
+        # Surface meaningful DB error details to the client
+        err_detail = None
+        try:
+            # Django wraps DB exceptions; for MySQLdb, e.args may contain (code, msg)
+            if hasattr(e, 'args') and e.args:
+                if isinstance(e.args[0], tuple):
+                    err_detail = e.args[0][1]
+                elif isinstance(e.args[0], int) and len(e.args) > 1:
+                    err_detail = e.args[1]
+        except Exception:
+            pass
+
+        msg = err_detail or str(e) or '예약 또는 결제 처리 중 오류'
+        print("🔥 DB ERROR:", msg)
+        return Response({'detail': msg}, status=400)
 
 
 from .serializers import ReservationSerializer
@@ -103,6 +115,32 @@ def cancel_reservation(request, reservation_id):
     if reservation.status == 'CANCELLED':
         return Response({'detail': '이미 취소됨'}, status=400)
 
-    reservation.status = 'CANCELLED'
-    reservation.save(update_fields=['status'])
-    return Response({'detail': '예약 취소 완료'}, status=200)
+    # 취소 처리와 함께 좌석 복구 및 운임 재계산 수행
+    try:
+        with transaction.atomic():
+            # 1) 예약 상태 취소
+            reservation.status = 'CANCELLED'
+            reservation.save(update_fields=['status'])
+
+            # 2) 좌석 상태 AVAILABLE로 복구 (트리거가 없다면 안전하게 복구)
+            from flights.models import Flight
+            flight_id = reservation.flight_id
+            seat_no = reservation.seat_no
+
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE Seat SET status='AVAILABLE' WHERE seat_no=%s AND aircraft_id=(SELECT aircraft_id FROM Flight WHERE flight_id=%s)",
+                    [seat_no, flight_id]
+                )
+
+                # 3) 운임 재계산 프로시저 호출
+                try:
+                    cursor.callproc('sp_recalculate_fare', [flight_id])
+                except Exception:
+                    # 일부 환경에서 프로시저가 없을 수 있으므로 조용히 통과
+                    pass
+
+        return Response({'detail': '예약 취소 완료'}, status=200)
+    except Exception as e:
+        print("🔥 CANCEL ERROR:", e)
+        return Response({'detail': '취소 중 오류: ' + str(e)}, status=400)

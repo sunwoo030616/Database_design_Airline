@@ -53,14 +53,14 @@ export default function SeatSelect() {
       {/* 🎫 항공권 헤더 */}
       <div className="ticket-header">
         <div className="airport">
-          <div className="code">{origin}</div>
+          <div className="code">{origin.airport_code}</div>
           <div className="city">{origin.city}</div>
         </div>
 
         <div className="plane-icon">✈</div>
 
         <div className="airport">
-          <div className="code">{destination}</div>
+          <div className="code">{destination.airport_code}</div>
           <div className="city">{destination.city}</div>
         </div>
       </div>
@@ -78,7 +78,7 @@ export default function SeatSelect() {
 
       {/* 좌석 그리드 */}
       <div className="seat-grid">
-        {seats.map((s, i) => (
+        {seats.map((s) => (
           <div
             key={s.seat_no}
             className={`seat 

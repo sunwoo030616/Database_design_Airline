@@ -13,17 +13,26 @@ export default function ReservationConfirm() {
 
   async function handlePayment() {
     try {
+      // Map UI payment option to backend expected values
+      const methodMap = {
+        CARD: "CARD",
+        POINT: "POINT",
+        BANK: "BANK_TRANSFER",
+      };
+      const payment_method = methodMap[method] || "CARD";
+
       await createReservation(
         flight.flight_id,
         selectedSeat,
-        method,
-        member.user_id
+        payment_method,
+        member?.user_id
       );
       alert("예약이 완료되었습니다!");
       navigate("/mypage");
     } catch (e) {
       console.error(e);
-      alert("결제 실패: " + e.message);
+      const msg = e?.response?.data?.detail || e.message || "알 수 없는 오류";
+      alert("결제 실패: " + msg);
     }
   }
 

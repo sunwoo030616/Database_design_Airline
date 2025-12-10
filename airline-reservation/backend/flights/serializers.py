@@ -9,8 +9,8 @@ class AirportSerializer(serializers.ModelSerializer):
 
 
 class RouteSerializer(serializers.ModelSerializer):
-    origin = AirportSerializer
-    destination = AirportSerializer
+    origin = AirportSerializer()
+    destination = AirportSerializer()
 
     class Meta:
         model = Route
