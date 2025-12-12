@@ -5,6 +5,152 @@ INSERT IGNORE INTO Airport VALUES
 ('KIX', 'Kansai International Airport', 'Osaka', 'Japan'),
 ('LAX', 'Los Angeles International Airport', 'Los Angeles', 'USA');
 
+-- 추가: 항공기 샘플 더 늘리기
+INSERT IGNORE INTO Aircraft (aircraft_id, model, capacity)
+VALUES
+('A321', 'Airbus A321', 190),
+('B789', 'Boeing 787-9', 280)
+ON DUPLICATE KEY UPDATE model=VALUES(model), capacity=VALUES(capacity);
+
+-- 추가: 노선 샘플 더 늘리기
+INSERT IGNORE INTO Route (route_id, origin, destination, distance, base_duration)
+VALUES
+(2001, 'ICN', 'SFO', 9180, 660),
+(2002, 'ICN', 'NRT', 1270, 125),
+(2003, 'NRT', 'LAX', 8810, 650)
+ON DUPLICATE KEY UPDATE origin=VALUES(origin), destination=VALUES(destination), distance=VALUES(distance), base_duration=VALUES(base_duration);
+
+-- 추가: 항공편 샘플 더 늘리기 (출발/도착 시간은 예시)
+INSERT IGNORE INTO Flight (flight_id, route_id, aircraft_id, departure_time, arrival_time)
+VALUES
+(3001, 2001, 'B789', '2025-12-20 10:00:00', '2025-12-20 21:00:00'),
+(3002, 2002, 'A321', '2025-12-21 08:30:00', '2025-12-21 10:35:00'),
+(3003, 2003, 'B789', '2025-12-22 12:15:00', '2025-12-22 23:05:00')
+ON DUPLICATE KEY UPDATE route_id=VALUES(route_id), aircraft_id=VALUES(aircraft_id), departure_time=VALUES(departure_time), arrival_time=VALUES(arrival_time);
+
+-- 예약 테스트를 위한 추가 항공편 (동일 노선에 일자만 달리 배치)
+INSERT IGNORE INTO Flight (flight_id, route_id, aircraft_id, departure_time, arrival_time)
+VALUES
+(3004, 2001, 'B789', '2025-12-23 09:00:00', '2025-12-23 20:00:00'),
+(3005, 2002, 'A321', '2025-12-24 07:45:00', '2025-12-24 09:50:00'),
+(3006, 2003, 'B789', '2025-12-25 13:30:00', '2025-12-25 23:59:00')
+ON DUPLICATE KEY UPDATE route_id=VALUES(route_id), aircraft_id=VALUES(aircraft_id), departure_time=VALUES(departure_time), arrival_time=VALUES(arrival_time);
+
+-- 예약 검증용 초기 가용 좌석 보장: 각 신규 항공편의 항공기 좌석을 AVAILABLE로 맞춤
+-- B789 좌석 표본
+INSERT IGNORE INTO Seat (aircraft_id, seat_no, seat_class, status)
+VALUES
+('B789','30A','ECONOMY','AVAILABLE'),('B789','30B','ECONOMY','AVAILABLE'),('B789','30C','ECONOMY','AVAILABLE'),
+('B789','31A','ECONOMY','AVAILABLE'),('B789','31B','ECONOMY','AVAILABLE'),('B789','31C','ECONOMY','AVAILABLE')
+ON DUPLICATE KEY UPDATE seat_class=VALUES(seat_class), status=VALUES(status);
+
+-- A321 좌석 표본
+INSERT IGNORE INTO Seat (aircraft_id, seat_no, seat_class, status)
+VALUES
+('A321','20A','ECONOMY','AVAILABLE'),('A321','20B','ECONOMY','AVAILABLE'),('A321','20C','ECONOMY','AVAILABLE'),
+('A321','21A','ECONOMY','AVAILABLE'),('A321','21B','ECONOMY','AVAILABLE'),('A321','21C','ECONOMY','AVAILABLE')
+ON DUPLICATE KEY UPDATE seat_class=VALUES(seat_class), status=VALUES(status);
+
+-- 예약 성공을 바로 확인하기 위한 샘플 예약+결제 (존재 시 건너뜀)
+-- Flight 3004(B789) 좌석 30A, 사용자 9001
+INSERT INTO Reservation (flight_id, seat_no, user_id, resv_time, status)
+SELECT 3004, '30A', 9001, NOW(), 'CONFIRMED' FROM DUAL
+WHERE NOT EXISTS (SELECT 1 FROM Reservation r WHERE r.flight_id=3004 AND r.seat_no='30A');
+INSERT INTO Payment (resv_id, amount, pay_time, method, status)
+SELECT r.resv_id, 950.00, NOW(), 'CARD', 'SUCCESS'
+FROM Reservation r
+WHERE r.flight_id=3004 AND r.seat_no='30A'
+AND NOT EXISTS (SELECT 1 FROM Payment p WHERE p.resv_id=r.resv_id);
+
+-- Flight 3005(A321) 좌석 20A, 사용자 9002
+INSERT INTO Reservation (flight_id, seat_no, user_id, resv_time, status)
+SELECT 3005, '20A', 9002, NOW(), 'CONFIRMED' FROM DUAL
+WHERE NOT EXISTS (SELECT 1 FROM Reservation r WHERE r.flight_id=3005 AND r.seat_no='20A');
+INSERT INTO Payment (resv_id, amount, pay_time, method, status)
+SELECT r.resv_id, 220.00, NOW(), 'CARD', 'SUCCESS'
+FROM Reservation r
+WHERE r.flight_id=3005 AND r.seat_no='20A'
+AND NOT EXISTS (SELECT 1 FROM Payment p WHERE p.resv_id=r.resv_id);
+
+-- 추가: 좌석 샘플 대량 생성 (간단히 가용 좌석 20개씩)
+-- ICN->SFO (B789)
+INSERT IGNORE INTO Seat (aircraft_id, seat_no, seat_class, status)
+VALUES
+('B789', '1A', 'BUSINESS', 'AVAILABLE'),
+('B789', '1B', 'BUSINESS', 'AVAILABLE'),
+('B789', '2A', 'BUSINESS', 'AVAILABLE'),
+('B789', '2B', 'BUSINESS', 'AVAILABLE'),
+('B789', '10A', 'ECONOMY', 'AVAILABLE'),
+('B789', '10B', 'ECONOMY', 'AVAILABLE'),
+('B789', '10C', 'ECONOMY', 'AVAILABLE'),
+('B789', '11A', 'ECONOMY', 'AVAILABLE'),
+('B789', '11B', 'ECONOMY', 'AVAILABLE'),
+('B789', '11C', 'ECONOMY', 'AVAILABLE'),
+('B789', '12A', 'ECONOMY', 'AVAILABLE'),
+('B789', '12B', 'ECONOMY', 'AVAILABLE'),
+('B789', '12C', 'ECONOMY', 'AVAILABLE')
+ON DUPLICATE KEY UPDATE seat_class=VALUES(seat_class), status=VALUES(status);
+
+-- ICN->NRT (A321)
+INSERT IGNORE INTO Seat (aircraft_id, seat_no, seat_class, status)
+VALUES
+('A321', '1A', 'BUSINESS', 'AVAILABLE'),
+('A321', '1B', 'BUSINESS', 'AVAILABLE'),
+('A321', '8A', 'ECONOMY', 'AVAILABLE'),
+('A321', '8B', 'ECONOMY', 'AVAILABLE'),
+('A321', '8C', 'ECONOMY', 'AVAILABLE'),
+('A321', '9A', 'ECONOMY', 'AVAILABLE'),
+('A321', '9B', 'ECONOMY', 'AVAILABLE'),
+('A321', '9C', 'ECONOMY', 'AVAILABLE')
+ON DUPLICATE KEY UPDATE seat_class=VALUES(seat_class), status=VALUES(status);
+
+-- NRT->LAX (B789)
+INSERT IGNORE INTO Seat (aircraft_id, seat_no, seat_class, status)
+VALUES
+('B789', '20A', 'ECONOMY', 'AVAILABLE'),
+('B789', '20B', 'ECONOMY', 'AVAILABLE'),
+('B789', '20C', 'ECONOMY', 'AVAILABLE'),
+('B789', '21A', 'ECONOMY', 'AVAILABLE'),
+('B789', '21B', 'ECONOMY', 'AVAILABLE'),
+('B789', '21C', 'ECONOMY', 'AVAILABLE')
+ON DUPLICATE KEY UPDATE seat_class=VALUES(seat_class), status=VALUES(status);
+
+-- 예약 원활화를 위한 좌석 추가 확보: B789 이코노미 22A~26C
+INSERT IGNORE INTO Seat (aircraft_id, seat_no, seat_class, status)
+VALUES
+('B789','22A','ECONOMY','AVAILABLE'),('B789','22B','ECONOMY','AVAILABLE'),('B789','22C','ECONOMY','AVAILABLE'),
+('B789','23A','ECONOMY','AVAILABLE'),('B789','23B','ECONOMY','AVAILABLE'),('B789','23C','ECONOMY','AVAILABLE'),
+('B789','24A','ECONOMY','AVAILABLE'),('B789','24B','ECONOMY','AVAILABLE'),('B789','24C','ECONOMY','AVAILABLE'),
+('B789','25A','ECONOMY','AVAILABLE'),('B789','25B','ECONOMY','AVAILABLE'),('B789','25C','ECONOMY','AVAILABLE'),
+('B789','26A','ECONOMY','AVAILABLE'),('B789','26B','ECONOMY','AVAILABLE'),('B789','26C','ECONOMY','AVAILABLE')
+ON DUPLICATE KEY UPDATE seat_class=VALUES(seat_class), status=VALUES(status);
+
+-- A321 이코노미 좌석 추가 확보: 12A~16C
+INSERT IGNORE INTO Seat (aircraft_id, seat_no, seat_class, status)
+VALUES
+('A321','12A','ECONOMY','AVAILABLE'),('A321','12B','ECONOMY','AVAILABLE'),('A321','12C','ECONOMY','AVAILABLE'),
+('A321','13A','ECONOMY','AVAILABLE'),('A321','13B','ECONOMY','AVAILABLE'),('A321','13C','ECONOMY','AVAILABLE'),
+('A321','14A','ECONOMY','AVAILABLE'),('A321','14B','ECONOMY','AVAILABLE'),('A321','14C','ECONOMY','AVAILABLE'),
+('A321','15A','ECONOMY','AVAILABLE'),('A321','15B','ECONOMY','AVAILABLE'),('A321','15C','ECONOMY','AVAILABLE'),
+('A321','16A','ECONOMY','AVAILABLE'),('A321','16B','ECONOMY','AVAILABLE'),('A321','16C','ECONOMY','AVAILABLE')
+ON DUPLICATE KEY UPDATE seat_class=VALUES(seat_class), status=VALUES(status);
+
+-- 테스트 편의를 위한 간단 회원/고객 샘플 (존재하면 갱신)
+INSERT IGNORE INTO Member (user_id, email, name)
+VALUES
+(9001, 'test1@example.com', 'Test One'),
+(9002, 'test2@example.com', 'Test Two')
+ON DUPLICATE KEY UPDATE email=VALUES(email), name=VALUES(name);
+
+INSERT IGNORE INTO Customer (user_id, grade)
+VALUES
+(9001, 'ECONOMY'),
+(9002, 'BUSINESS')
+ON DUPLICATE KEY UPDATE grade=VALUES(grade);
+
+-- 결제 샘플 (예약 전에 결제 데이터가 필요한 경우에 맞춰 조정)
+-- 예약 테스트는 애플리케이션 API로 좌석 선택 후 진행 권장
+
 INSERT IGNORE INTO Aircraft VALUES
 ('A320-01', 'A320', 'Airbus', 180),
 ('B737-01', 'B737', 'Boeing', 160);

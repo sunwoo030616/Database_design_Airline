@@ -11,7 +11,7 @@ CREATE PROCEDURE sp_create_reservation_with_payment (
     IN p_amount    DECIMAL(10,2),
     IN p_method    VARCHAR(20)
 )
-BEGIN
+BEGINSELECT * FROM INFORMATION_SCHEMA.ENABLED_ROLES;
     DECLARE v_resv_id INT;
 
     -- 에러 핸들러: 중간에 오류 나면 전체 롤백 + 에러 발생

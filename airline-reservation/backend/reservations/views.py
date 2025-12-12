@@ -15,7 +15,7 @@ def create_reservation(request):
     serializer.is_valid(raise_exception=True)
     data = serializer.validated_data
 
-    member_id = data["member_id"]
+    member_id = data['member_id']
     flight_id = data['flight_id']
     seat_no = data['seat_no']
     payment_method = data['payment_method']

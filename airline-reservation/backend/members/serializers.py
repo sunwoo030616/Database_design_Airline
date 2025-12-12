@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password, check_password
-from .models import Member
+from .models import Member, Customer
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -23,6 +23,12 @@ class RegisterSerializer(serializers.Serializer):
             user_type='customer',
             **validated_data,
         )
+        # 회원 가입 시 Customer 프로필 자동 생성하여 이후 API에서 member_id 요구를 방지
+        try:
+            Customer.objects.get_or_create(user=member)
+        except Exception:
+            # 외부 스키마 제약으로 실패해도 회원 생성은 유지
+            pass
         return member
 
 

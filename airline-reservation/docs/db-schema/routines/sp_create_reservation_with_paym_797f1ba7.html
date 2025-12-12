@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>airline.airline</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>airline</b></a><span class="navbar-brand" style="padding-left: 0">.airline</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>sp_create_reservation_with_payment_strict</h1><br />
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Parameters</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Mode</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>p_flight_id</td>
+                                    <td>int</td>
+                                    <td>IN</td>
+                                </tr>
+                                <tr>
+                                    <td>p_user_id</td>
+                                    <td>int</td>
+                                    <td>IN</td>
+                                </tr>
+                                <tr>
+                                    <td>p_seat_no</td>
+                                    <td>varchar(10)</td>
+                                    <td>IN</td>
+                                </tr>
+                                <tr>
+                                    <td>p_amount</td>
+                                    <td>decimal(10,2)</td>
+                                    <td>IN</td>
+                                </tr>
+                                <tr>
+                                    <td>p_method</td>
+                                    <td>varchar(20)</td>
+                                    <td>IN</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o"></i>
+                            <h3 id="RoutineDefinition" class="box-title">Definition</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">BEGIN&#10;    /* 지역 변수는 BEGIN 바로 다음, 어떤 SQL 이전에 선언해야 합니다 */&#10;    DECLARE v_existing_resv_id INT DEFAULT NULL;&#10;    DECLARE v_existing_status VARCHAR(20) DEFAULT NULL;&#10;    /* 선행 유효성 검증으로 정확한 실패 이유를 제공 */&#10;    -- Flight 존재 확인&#10;    IF (SELECT COUNT(*) FROM Flight WHERE flight_id &#61; p_flight_id) &#61; 0 THEN&#10;        SIGNAL SQLSTATE &#39;45000&#39; SET MESSAGE_TEXT &#61; &#39;유효하지 않은 항공편입니다.&#39;;&#10;    END IF;&#10;&#10;    -- Member 존재 확인&#10;    IF (SELECT COUNT(*) FROM Member WHERE user_id &#61; p_user_id) &#61; 0 THEN&#10;        SIGNAL SQLSTATE &#39;45000&#39; SET MESSAGE_TEXT &#61; &#39;유효하지 않은 회원입니다.&#39;;&#10;    END IF;&#10;&#10;    -- 좌석 유효성 및 사용 가능 여부 확인&#10;    IF (SELECT COUNT(*) FROM Seat WHERE seat_no &#61; p_seat_no AND aircraft_id &#61; (SELECT aircraft_id FROM Flight WHERE flight_id &#61; p_flight_id)) &#61; 0 THEN&#10;        SIGNAL SQLSTATE &#39;45000&#39; SET MESSAGE_TEXT &#61; &#39;유효하지 않은 좌석입니다.&#39;;&#10;    END IF;&#10;&#10;    IF (SELECT status FROM Seat WHERE seat_no &#61; p_seat_no AND aircraft_id &#61; (SELECT aircraft_id FROM Flight WHERE flight_id &#61; p_flight_id)) &lt;&gt; &#39;AVAILABLE&#39; THEN&#10;        SIGNAL SQLSTATE &#39;45000&#39; SET MESSAGE_TEXT &#61; &#39;이미 예약된 좌석입니다.&#39;;&#10;    END IF;&#10;&#10;    -- 결제 수단 허용값 확인&#10;    IF (SELECT NOT (p_method IN (&#39;CARD&#39;,&#39;POINT&#39;,&#39;BANK_TRANSFER&#39;))) THEN&#10;        SIGNAL SQLSTATE &#39;45000&#39; SET MESSAGE_TEXT &#61; &#39;허용되지 않은 결제 수단입니다.&#39;;&#10;    END IF;&#10;&#10;        START TRANSACTION;&#10;&#10;        /* 중복 예약 키(Flight, Seat)에 대해 기존 CANCELLED 레코드가 있으면 재사용, 그렇지 않으면 새로 생성 */&#10;&#10;        SELECT resv_id, status&#10;            INTO v_existing_resv_id, v_existing_status&#10;            FROM Reservation&#10;         WHERE flight_id &#61; p_flight_id&#10;             AND seat_no &#61; p_seat_no&#10;         LIMIT 1;&#10;&#10;        IF v_existing_resv_id IS NOT NULL THEN&#10;                -- 기존 예약이 존재하는 경우 상태에 따라 처리&#10;                IF v_existing_status &#61; &#39;CANCELLED&#39; THEN&#10;                        -- 취소된 예약을 다시 BOOKED로 전환하여 재사용&#10;                        UPDATE Reservation&#10;                             SET user_id &#61; p_user_id,&#10;                                     resv_time &#61; NOW(),&#10;                                     status &#61; &#39;BOOKED&#39;&#10;                         WHERE resv_id &#61; v_existing_resv_id;&#10;&#10;                        SET @new_resv_id &#61; v_existing_resv_id;&#10;                ELSE&#10;                        -- 이미 활성 예약이 존재&#10;                        SIGNAL SQLSTATE &#39;45000&#39; SET MESSAGE_TEXT &#61; &#39;이미 예약된 좌석입니다.&#39;;&#10;                END IF;&#10;        ELSE&#10;                -- 기존 예약이 없으면 새로 생성&#10;                INSERT INTO Reservation (flight_id, seat_no, user_id, resv_time, status)&#10;                VALUES (p_flight_id, p_seat_no, p_user_id, NOW(), &#39;BOOKED&#39;);&#10;&#10;                -- 가장 최근 예약 번호&#10;                SET @new_resv_id &#61; LAST_INSERT_ID();&#10;        END IF;&#10;&#10;        -- 좌석 상태 점유로 변경 (트리거가 없다면 안전하게 동기화)&#10;        UPDATE Seat&#10;             SET status &#61; &#39;BOOKED&#39;&#10;         WHERE seat_no &#61; p_seat_no&#10;             AND aircraft_id &#61; (SELECT aircraft_id FROM Flight WHERE flight_id &#61; p_flight_id);&#10;&#10;    -- 2) 결제 처리: 재사용된 예약에 기존 결제가 있으면 업데이트로 대체&#10;    -- Payment의 기본 키가 resv_id인 환경을 고려하여 UPSERT 사용&#10;    INSERT INTO Payment (resv_id, amount, pay_time, method, status)&#10;    VALUES (@new_resv_id, p_amount, NOW(), p_method, &#39;PAID&#39;)&#10;    ON DUPLICATE KEY UPDATE&#10;        amount &#61; VALUES(amount),&#10;        pay_time &#61; VALUES(pay_time),&#10;        method &#61; VALUES(method),&#10;        status &#61; VALUES(status);&#10;&#10;    COMMIT;&#10;END</textarea>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.2.4</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="routine.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
+</html>

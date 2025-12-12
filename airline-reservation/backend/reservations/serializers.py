@@ -16,8 +16,13 @@ class ReservationSerializer(serializers.ModelSerializer):
 
 
 class ReservationCreateSerializer(serializers.Serializer):
-    member_id = serializers.IntegerField()
     flight_id = serializers.IntegerField()
     seat_no = serializers.CharField(max_length=10)
-    payment_method = serializers.CharField(max_length=20)
-    # 필요한 값 더 있으면 추가 (예: 사용 마일리지 등)
+    payment_method = serializers.CharField(max_length=20, required=False, allow_blank=True)
+    member_id = serializers.IntegerField(required=True)
+
+    def validate(self, attrs):
+        # payment_method 기본값 설정
+        if not attrs.get('payment_method'):
+            attrs['payment_method'] = 'CARD'
+        return attrs

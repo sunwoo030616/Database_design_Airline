@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="airline" schema="airline" type="MySQL - 9.5.0">
+   <tables>
+      <table catalog="airline" name="Admin" numRows="1" remarks="" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="user_id" foreignKey="admin_ibfk_1" implied="false" onDeleteCascade="false" table="Member"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="role" nullable="false" remarks="" size="10" type="INT" typeCode="4"/>
+         <primaryKey column="user_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="Aircraft" numRows="25" remarks="" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="aircraft_id" nullable="false" remarks="" size="10" type="CHAR" typeCode="1">
+            <child catalog="airline" column="aircraft_id" foreignKey="flight_ibfk_2" implied="false" onDeleteCascade="false" table="Flight"/>
+            <child catalog="airline" column="aircraft_id" foreignKey="revenueanalysis_ibfk_2" implied="false" onDeleteCascade="false" table="RevenueAnalysis"/>
+            <child catalog="airline" column="aircraft_id" foreignKey="seat_ibfk_1" implied="false" onDeleteCascade="false" table="Seat"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="model" nullable="false" remarks="" size="50" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="manufacturer" nullable="false" remarks="" size="50" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="capacity" nullable="false" remarks="" size="10" type="INT" typeCode="4"/>
+         <primaryKey column="aircraft_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="aircraft_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="Airport" numRows="40" remarks="" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="airport_code" nullable="false" remarks="" size="3" type="CHAR" typeCode="1">
+            <child catalog="airline" column="destination" foreignKey="route_ibfk_2" implied="false" onDeleteCascade="false" table="Route"/>
+            <child catalog="airline" column="origin" foreignKey="route_ibfk_1" implied="false" onDeleteCascade="false" table="Route"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="airport_name" nullable="false" remarks="" size="100" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="city" nullable="false" remarks="" size="50" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="country" nullable="false" remarks="" size="50" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="airport_code" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="airport_code"/>
+         </index>
+      </table>
+      <table catalog="airline" name="auth_group" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <child catalog="airline" column="group_id" foreignKey="auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" implied="false" onDeleteCascade="false" table="auth_group_permissions"/>
+            <child catalog="airline" column="group_id" foreignKey="auth_user_groups_group_id_97559544_fk_auth_group_id" implied="false" onDeleteCascade="false" table="auth_user_groups"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="150" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="name" unique="true">
+            <column ascending="true" name="name"/>
+         </index>
+      </table>
+      <table catalog="airline" name="auth_group_permissions" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="BIGINT" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="group_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="id" foreignKey="auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" implied="false" onDeleteCascade="false" table="auth_group"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="permission_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="id" foreignKey="auth_group_permissio_permission_id_84c5c92e_fk_auth_perm" implied="false" onDeleteCascade="false" table="auth_permission"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="auth_group_permissio_permission_id_84c5c92e_fk_auth_perm" unique="false">
+            <column ascending="true" name="permission_id"/>
+         </index>
+         <index name="auth_group_permissions_group_id_permission_id_0cd325b0_uniq" unique="true">
+            <column ascending="true" name="group_id"/>
+            <column ascending="true" name="permission_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="auth_permission" numRows="72" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <child catalog="airline" column="permission_id" foreignKey="auth_group_permissio_permission_id_84c5c92e_fk_auth_perm" implied="false" onDeleteCascade="false" table="auth_group_permissions"/>
+            <child catalog="airline" column="permission_id" foreignKey="auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm" implied="false" onDeleteCascade="false" table="auth_user_user_permissions"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="false" remarks="" size="255" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="content_type_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="id" foreignKey="auth_permission_content_type_id_2f476e4b_fk_django_co" implied="false" onDeleteCascade="false" table="django_content_type"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="codename" nullable="false" remarks="" size="100" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="auth_permission_content_type_id_codename_01ab375a_uniq" unique="true">
+            <column ascending="true" name="content_type_id"/>
+            <column ascending="true" name="codename"/>
+         </index>
+      </table>
+      <table catalog="airline" name="auth_user" numRows="1" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <child catalog="airline" column="user_id" foreignKey="auth_user_groups_user_id_6a12ed8b_fk_auth_user_id" implied="false" onDeleteCascade="false" table="auth_user_groups"/>
+            <child catalog="airline" column="user_id" foreignKey="auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id" implied="false" onDeleteCascade="false" table="auth_user_user_permissions"/>
+            <child catalog="airline" column="user_id" foreignKey="django_admin_log_user_id_c564eba6_fk_auth_user_id" implied="false" onDeleteCascade="false" table="django_admin_log"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="password" nullable="false" remarks="" size="128" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="last_login" nullable="true" remarks="" size="26" type="DATETIME" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="is_superuser" nullable="false" remarks="" size="1" type="BIT" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="username" nullable="false" remarks="" size="150" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="first_name" nullable="false" remarks="" size="150" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="last_name" nullable="false" remarks="" size="150" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="email" nullable="false" remarks="" size="254" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="is_staff" nullable="false" remarks="" size="1" type="BIT" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="is_active" nullable="false" remarks="" size="1" type="BIT" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="date_joined" nullable="false" remarks="" size="26" type="DATETIME" typeCode="93"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="username" unique="true">
+            <column ascending="true" name="username"/>
+         </index>
+      </table>
+      <table catalog="airline" name="auth_user_groups" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="BIGINT" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="id" foreignKey="auth_user_groups_user_id_6a12ed8b_fk_auth_user_id" implied="false" onDeleteCascade="false" table="auth_user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="group_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="id" foreignKey="auth_user_groups_group_id_97559544_fk_auth_group_id" implied="false" onDeleteCascade="false" table="auth_group"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="auth_user_groups_group_id_97559544_fk_auth_group_id" unique="false">
+            <column ascending="true" name="group_id"/>
+         </index>
+         <index name="auth_user_groups_user_id_group_id_94350c0c_uniq" unique="true">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="group_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="auth_user_user_permissions" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="BIGINT" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="id" foreignKey="auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id" implied="false" onDeleteCascade="false" table="auth_user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="permission_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="id" foreignKey="auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm" implied="false" onDeleteCascade="false" table="auth_permission"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm" unique="false">
+            <column ascending="true" name="permission_id"/>
+         </index>
+         <index name="auth_user_user_permissions_user_id_permission_id_14a6b632_uniq" unique="true">
+            <column ascending="true" name="user_id"/>
+            <column ascending="true" name="permission_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="Customer" numRows="26" remarks="" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="user_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="user_id" foreignKey="customer_ibfk_1" implied="false" onDeleteCascade="false" table="Member"/>
+         </column>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="1" name="mileage" nullable="false" remarks="" size="10" type="INT" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="Bronze" digits="0" id="2" name="grade" nullable="false" remarks="" size="20" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="user_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="django_admin_log" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="INT" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="action_time" nullable="false" remarks="" size="26" type="DATETIME" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="object_id" nullable="true" remarks="" size="2147483647" type="LONGTEXT" typeCode="-1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="object_repr" nullable="false" remarks="" size="200" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="action_flag" nullable="false" remarks="" size="5" type="SMALLINT UNSIGNED" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="change_message" nullable="false" remarks="" size="2147483647" type="LONGTEXT" typeCode="-1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="content_type_id" nullable="true" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="id" foreignKey="django_admin_log_content_type_id_c4bce8eb_fk_django_co" implied="false" onDeleteCascade="false" table="django_content_type"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="user_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="id" foreignKey="django_admin_log_user_id_c564eba6_fk_auth_user_id" implied="false" onDeleteCascade="false" table="auth_user"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="django_admin_log_content_type_id_c4bce8eb_fk_django_co" unique="false">
+            <column ascending="true" name="content_type_id"/>
+         </index>
+         <index name="django_admin_log_user_id_c564eba6_fk_auth_user_id" unique="false">
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="django_content_type" numRows="18" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <child catalog="airline" column="content_type_id" foreignKey="auth_permission_content_type_id_2f476e4b_fk_django_co" implied="false" onDeleteCascade="false" table="auth_permission"/>
+            <child catalog="airline" column="content_type_id" foreignKey="django_admin_log_content_type_id_c4bce8eb_fk_django_co" implied="false" onDeleteCascade="false" table="django_admin_log"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="app_label" nullable="false" remarks="" size="100" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="model" nullable="false" remarks="" size="100" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="django_content_type_app_label_model_76bd3d3b_uniq" unique="true">
+            <column ascending="true" name="app_label"/>
+            <column ascending="true" name="model"/>
+         </index>
+      </table>
+      <table catalog="airline" name="django_migrations" numRows="24" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="BIGINT" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="app" nullable="false" remarks="" size="255" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="name" nullable="false" remarks="" size="255" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="applied" nullable="false" remarks="" size="26" type="DATETIME" typeCode="93"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="django_session" numRows="1" remarks="" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="session_key" nullable="false" remarks="" size="40" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="session_data" nullable="false" remarks="" size="2147483647" type="LONGTEXT" typeCode="-1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="expire_date" nullable="false" remarks="" size="26" type="DATETIME" typeCode="93"/>
+         <primaryKey column="session_key" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="session_key"/>
+         </index>
+         <index name="django_session_expire_date_a5c62663" unique="false">
+            <column ascending="true" name="expire_date"/>
+         </index>
+      </table>
+      <table catalog="airline" name="DynamicFareLog" numRows="17" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="log_id" nullable="false" remarks="" size="10" type="INT" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="flight_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="flight_id" foreignKey="dynamicfarelog_ibfk_1" implied="false" onDeleteCascade="false" table="Flight"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="resv_id" nullable="true" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="resv_id" foreignKey="dynamicfarelog_ibfk_2" implied="false" onDeleteCascade="false" table="Reservation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="2" id="3" name="old_fare" nullable="false" remarks="" size="10" type="DECIMAL" typeCode="3"/>
+         <column autoUpdated="false" defaultValue="null" digits="2" id="4" name="new_fare" nullable="false" remarks="" size="10" type="DECIMAL" typeCode="3"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="change_time" nullable="false" remarks="" size="19" type="DATETIME" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="trigger_event" nullable="false" remarks="" size="100" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="log_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="log_id"/>
+         </index>
+         <index name="flight_id" unique="false">
+            <column ascending="true" name="flight_id"/>
+         </index>
+         <index name="resv_id" unique="false">
+            <column ascending="true" name="resv_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="Flight" numRows="78" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="flight_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <child catalog="airline" column="flight_id" foreignKey="dynamicfarelog_ibfk_1" implied="false" onDeleteCascade="false" table="DynamicFareLog"/>
+            <child catalog="airline" column="flight_id" foreignKey="reservation_ibfk_1" implied="false" onDeleteCascade="false" table="Reservation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="route_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="route_id" foreignKey="flight_ibfk_1" implied="false" onDeleteCascade="false" table="Route"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="aircraft_id" nullable="false" remarks="" size="10" type="CHAR" typeCode="1">
+            <parent catalog="airline" column="aircraft_id" foreignKey="flight_ibfk_2" implied="false" onDeleteCascade="false" table="Aircraft"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="2" id="3" name="base_fare" nullable="false" remarks="" size="10" type="DECIMAL" typeCode="3"/>
+         <column autoUpdated="false" defaultValue="null" digits="2" id="4" name="current_fare" nullable="false" remarks="" size="10" type="DECIMAL" typeCode="3"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="departure_time" nullable="false" remarks="" size="19" type="DATETIME" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="arrival_time" nullable="false" remarks="" size="19" type="DATETIME" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="status" nullable="true" remarks="" size="9" type="enum('SCHEDULED', 'DELAYED', 'CANCELLED', 'DEPARTED', 'ARRIVED')" typeCode="1"/>
+         <primaryKey column="flight_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="flight_id"/>
+         </index>
+         <index name="aircraft_id" unique="false">
+            <column ascending="true" name="aircraft_id"/>
+         </index>
+         <index name="route_id" unique="false">
+            <column ascending="true" name="route_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="Member" numRows="29" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="user_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <child catalog="airline" column="user_id" foreignKey="admin_ibfk_1" implied="false" onDeleteCascade="false" table="Admin"/>
+            <child catalog="airline" column="user_id" foreignKey="customer_ibfk_1" implied="false" onDeleteCascade="false" table="Customer"/>
+            <child catalog="airline" column="user_id" foreignKey="reservation_ibfk_2" implied="false" onDeleteCascade="false" table="Reservation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="name" nullable="true" remarks="" size="50" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="email" nullable="false" remarks="" size="100" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="password" nullable="false" remarks="" size="255" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="phone_num" nullable="true" remarks="" size="20" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="user_type" nullable="false" remarks="" size="20" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="user_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="email" unique="true">
+            <column ascending="true" name="email"/>
+         </index>
+      </table>
+      <table catalog="airline" name="Payment" numRows="179" remarks="" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="resv_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="resv_id" foreignKey="payment_ibfk_1" implied="false" onDeleteCascade="false" table="Reservation"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="2" id="1" name="amount" nullable="false" remarks="" size="10" type="DECIMAL" typeCode="3"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="pay_time" nullable="false" remarks="" size="19" type="DATETIME" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="method" nullable="false" remarks="" size="20" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="status" nullable="false" remarks="" size="20" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="resv_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="resv_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="Reservation" numRows="169" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="resv_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <child catalog="airline" column="resv_id" foreignKey="dynamicfarelog_ibfk_2" implied="false" onDeleteCascade="false" table="DynamicFareLog"/>
+            <child catalog="airline" column="resv_id" foreignKey="payment_ibfk_1" implied="false" onDeleteCascade="false" table="Payment"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="flight_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="flight_id" foreignKey="reservation_ibfk_1" implied="false" onDeleteCascade="false" table="Flight"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="seat_no" nullable="false" remarks="" size="10" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="user_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="user_id" foreignKey="reservation_ibfk_2" implied="false" onDeleteCascade="false" table="Member"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="resv_time" nullable="false" remarks="" size="19" type="DATETIME" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="status" nullable="false" remarks="" size="20" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="resv_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="resv_id"/>
+         </index>
+         <index name="flight_id" unique="true">
+            <column ascending="true" name="flight_id"/>
+            <column ascending="true" name="seat_no"/>
+         </index>
+         <index name="user_id" unique="false">
+            <column ascending="true" name="user_id"/>
+         </index>
+      </table>
+      <table catalog="airline" name="RevenueAnalysis" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="analysis_id" nullable="false" remarks="" size="10" type="INT" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="route_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <parent catalog="airline" column="route_id" foreignKey="revenueanalysis_ibfk_1" implied="false" onDeleteCascade="false" table="Route"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="aircraft_id" nullable="false" remarks="" size="10" type="CHAR" typeCode="1">
+            <parent catalog="airline" column="aircraft_id" foreignKey="revenueanalysis_ibfk_2" implied="false" onDeleteCascade="false" table="Aircraft"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="month" nullable="false" remarks="" size="10" type="DATE" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="seat_class" nullable="false" remarks="" size="20" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="2" id="5" name="total_revenue" nullable="false" remarks="" size="12" type="DECIMAL" typeCode="3"/>
+         <primaryKey column="analysis_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="analysis_id"/>
+         </index>
+         <index name="aircraft_id" unique="false">
+            <column ascending="true" name="aircraft_id"/>
+         </index>
+         <index name="route_id" unique="true">
+            <column ascending="true" name="route_id"/>
+            <column ascending="true" name="aircraft_id"/>
+            <column ascending="true" name="month"/>
+            <column ascending="true" name="seat_class"/>
+         </index>
+      </table>
+      <table catalog="airline" name="Route" numRows="160" remarks="" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="route_id" nullable="false" remarks="" size="10" type="INT" typeCode="4">
+            <child catalog="airline" column="route_id" foreignKey="flight_ibfk_1" implied="false" onDeleteCascade="false" table="Flight"/>
+            <child catalog="airline" column="route_id" foreignKey="revenueanalysis_ibfk_1" implied="false" onDeleteCascade="false" table="RevenueAnalysis"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="origin" nullable="false" remarks="" size="3" type="CHAR" typeCode="1">
+            <parent catalog="airline" column="airport_code" foreignKey="route_ibfk_1" implied="false" onDeleteCascade="false" table="Airport"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="destination" nullable="false" remarks="" size="3" type="CHAR" typeCode="1">
+            <parent catalog="airline" column="airport_code" foreignKey="route_ibfk_2" implied="false" onDeleteCascade="false" table="Airport"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="distance" nullable="false" remarks="" size="10" type="INT" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="base_duration" nullable="false" remarks="" size="10" type="INT" typeCode="4"/>
+         <primaryKey column="route_id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="route_id"/>
+         </index>
+         <index name="destination" unique="false">
+            <column ascending="true" name="destination"/>
+         </index>
+         <index name="idx_route_origin_dest" unique="false">
+            <column ascending="true" name="origin"/>
+            <column ascending="true" name="destination"/>
+         </index>
+      </table>
+      <table catalog="airline" name="Seat" numRows="192" remarks="" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="aircraft_id" nullable="false" remarks="" size="10" type="CHAR" typeCode="1">
+            <parent catalog="airline" column="aircraft_id" foreignKey="seat_ibfk_1" implied="false" onDeleteCascade="false" table="Aircraft"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="seat_no" nullable="false" remarks="" size="10" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="seat_class" nullable="false" remarks="" size="20" type="VARCHAR" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="AVAILABLE" digits="0" id="3" name="status" nullable="false" remarks="" size="20" type="VARCHAR" typeCode="12"/>
+         <primaryKey column="aircraft_id" sequenceNumberInPK="1"/>
+         <primaryKey column="seat_no" sequenceNumberInPK="2"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="aircraft_id"/>
+            <column ascending="true" name="seat_no"/>
+         </index>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="CONTAINS SQL" deterministic="false" name="sp_create_reservation_with_payment" securityType="DEFINER" type="PROCEDURE">
+         <comment/>
+         <definition language="SQL"><![CDATA[BEGIN
+    DECLARE v_resv_id INT;
+
+    -- 에러 핸들러: 중간에 오류 나면 전체 롤백 + 에러 발생
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = '예약/결제 처리 중 오류가 발생하여 롤백되었습니다.';
+    END;
+
+    START TRANSACTION;
+
+    -- 1. 예약 생성 (좌석 유효성 트리거, 동적 가격 트리거 자동 작동)
+    INSERT INTO Reservation (flight_id, seat_no, user_id, resv_time, status)
+    VALUES (p_flight_id, p_seat_no, p_user_id, NOW(), 'BOOKED');
+
+    SET v_resv_id = LAST_INSERT_ID();
+
+    -- 2. 결제 생성
+    INSERT INTO Payment (resv_id, amount, pay_time, method, status)
+    VALUES (v_resv_id, p_amount, NOW(), p_method, 'PAID');
+
+    COMMIT;
+END]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_flight_id" type="int"/>
+            <parameter mode="IN" name="p_user_id" type="int"/>
+            <parameter mode="IN" name="p_seat_no" type="varchar(10)"/>
+            <parameter mode="IN" name="p_amount" type="decimal(10,2)"/>
+            <parameter mode="IN" name="p_method" type="varchar(20)"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="CONTAINS SQL" deterministic="false" name="sp_create_reservation_with_payment_strict" securityType="DEFINER" type="PROCEDURE">
+         <comment/>
+         <definition language="SQL"><![CDATA[BEGIN
+    /* 지역 변수는 BEGIN 바로 다음, 어떤 SQL 이전에 선언해야 합니다 */
+    DECLARE v_existing_resv_id INT DEFAULT NULL;
+    DECLARE v_existing_status VARCHAR(20) DEFAULT NULL;
+    /* 선행 유효성 검증으로 정확한 실패 이유를 제공 */
+    -- Flight 존재 확인
+    IF (SELECT COUNT(*) FROM Flight WHERE flight_id = p_flight_id) = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '유효하지 않은 항공편입니다.';
+    END IF;
+
+    -- Member 존재 확인
+    IF (SELECT COUNT(*) FROM Member WHERE user_id = p_user_id) = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '유효하지 않은 회원입니다.';
+    END IF;
+
+    -- 좌석 유효성 및 사용 가능 여부 확인
+    IF (SELECT COUNT(*) FROM Seat WHERE seat_no = p_seat_no AND aircraft_id = (SELECT aircraft_id FROM Flight WHERE flight_id = p_flight_id)) = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '유효하지 않은 좌석입니다.';
+    END IF;
+
+    IF (SELECT status FROM Seat WHERE seat_no = p_seat_no AND aircraft_id = (SELECT aircraft_id FROM Flight WHERE flight_id = p_flight_id)) <> 'AVAILABLE' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '이미 예약된 좌석입니다.';
+    END IF;
+
+    -- 결제 수단 허용값 확인
+    IF (SELECT NOT (p_method IN ('CARD','POINT','BANK_TRANSFER'))) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '허용되지 않은 결제 수단입니다.';
+    END IF;
+
+        START TRANSACTION;
+
+        /* 중복 예약 키(Flight, Seat)에 대해 기존 CANCELLED 레코드가 있으면 재사용, 그렇지 않으면 새로 생성 */
+
+        SELECT resv_id, status
+            INTO v_existing_resv_id, v_existing_status
+            FROM Reservation
+         WHERE flight_id = p_flight_id
+             AND seat_no = p_seat_no
+         LIMIT 1;
+
+        IF v_existing_resv_id IS NOT NULL THEN
+                -- 기존 예약이 존재하는 경우 상태에 따라 처리
+                IF v_existing_status = 'CANCELLED' THEN
+                        -- 취소된 예약을 다시 BOOKED로 전환하여 재사용
+                        UPDATE Reservation
+                             SET user_id = p_user_id,
+                                     resv_time = NOW(),
+                                     status = 'BOOKED'
+                         WHERE resv_id = v_existing_resv_id;
+
+                        SET @new_resv_id = v_existing_resv_id;
+                ELSE
+                        -- 이미 활성 예약이 존재
+                        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = '이미 예약된 좌석입니다.';
+                END IF;
+        ELSE
+                -- 기존 예약이 없으면 새로 생성
+                INSERT INTO Reservation (flight_id, seat_no, user_id, resv_time, status)
+                VALUES (p_flight_id, p_seat_no, p_user_id, NOW(), 'BOOKED');
+
+                -- 가장 최근 예약 번호
+                SET @new_resv_id = LAST_INSERT_ID();
+        END IF;
+
+        -- 좌석 상태 점유로 변경 (트리거가 없다면 안전하게 동기화)
+        UPDATE Seat
+             SET status = 'BOOKED'
+         WHERE seat_no = p_seat_no
+             AND aircraft_id = (SELECT aircraft_id FROM Flight WHERE flight_id = p_flight_id);
+
+    -- 2) 결제 처리: 재사용된 예약에 기존 결제가 있으면 업데이트로 대체
+    -- Payment의 기본 키가 resv_id인 환경을 고려하여 UPSERT 사용
+    INSERT INTO Payment (resv_id, amount, pay_time, method, status)
+    VALUES (@new_resv_id, p_amount, NOW(), p_method, 'PAID')
+    ON DUPLICATE KEY UPDATE
+        amount = VALUES(amount),
+        pay_time = VALUES(pay_time),
+        method = VALUES(method),
+        status = VALUES(status);
+
+    COMMIT;
+END]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_flight_id" type="int"/>
+            <parameter mode="IN" name="p_user_id" type="int"/>
+            <parameter mode="IN" name="p_seat_no" type="varchar(10)"/>
+            <parameter mode="IN" name="p_amount" type="decimal(10,2)"/>
+            <parameter mode="IN" name="p_method" type="varchar(20)"/>
+         </parameters>
+      </routine>
+      <routine dataAccess="CONTAINS SQL" deterministic="false" name="sp_recalculate_fare" securityType="DEFINER" type="PROCEDURE">
+         <comment/>
+         <definition language="SQL"><![CDATA[BEGIN
+    DECLARE v_aircraft_id CHAR(10);
+    DECLARE v_base_fare DECIMAL(10,2);
+    DECLARE v_old_fare  DECIMAL(10,2);
+    DECLARE v_new_fare  DECIMAL(10,2);
+    DECLARE v_total_seats   INT;
+    DECLARE v_booked_seats  INT;
+    DECLARE v_occupancy     DECIMAL(5,2);
+    DECLARE v_departure     DATETIME;
+    DECLARE v_hours_to_dep  INT;
+    DECLARE v_occ_factor    DECIMAL(5,2);
+    DECLARE v_time_factor   DECIMAL(5,2);
+
+    -- 1. 기본 정보 + 잠금
+    SELECT aircraft_id, base_fare, current_fare, departure_time
+      INTO v_aircraft_id, v_base_fare, v_old_fare, v_departure
+      FROM Flight
+     WHERE flight_id = p_flight_id
+     FOR UPDATE;
+
+    -- 2. 좌석 수 정보
+    SELECT COUNT(*) INTO v_total_seats
+      FROM Seat
+     WHERE aircraft_id = v_aircraft_id;
+
+    SELECT COUNT(*) INTO v_booked_seats
+      FROM Reservation
+     WHERE flight_id = p_flight_id
+       AND status = 'BOOKED';
+
+    IF v_total_seats = 0 THEN
+        SET v_occ_factor = 1.00;
+    ELSE
+        SET v_occupancy = v_booked_seats * 100.0 / v_total_seats;
+
+        -- 점유율 기반 요인
+        --  <30%  : 10% 할인
+        --  30~50 : 기본
+        --  50~80 : 10% 인상
+        --  >=80% : 20% 인상
+        IF v_occupancy < 30 THEN
+            SET v_occ_factor = 0.90;
+        ELSEIF v_occupancy < 50 THEN
+            SET v_occ_factor = 1.00;
+        ELSEIF v_occupancy < 80 THEN
+            SET v_occ_factor = 1.10;
+        ELSE
+            SET v_occ_factor = 1.20;
+        END IF;
+    END IF;
+
+    -- 3. 출발까지 남은 시간 기반 요인
+    --   72시간 초과 : 영향 없음
+    --   24~72시간   : 5% 인상
+    --   24시간 이내 : 10% 인상
+    SET v_hours_to_dep = TIMESTAMPDIFF(HOUR, NOW(), v_departure);
+
+    IF v_hours_to_dep IS NULL OR v_hours_to_dep > 72 THEN
+        SET v_time_factor = 1.00;
+    ELSEIF v_hours_to_dep > 24 THEN
+        SET v_time_factor = 1.05;
+    ELSE
+        SET v_time_factor = 1.10;
+    END IF;
+
+    -- 4. 최종 요금 계산: base_fare * 점유율 요인 * 시간 요인
+    SET v_new_fare = ROUND(v_base_fare * v_occ_factor * v_time_factor, 2);
+
+    -- 5. 변경이 있을 때만 업데이트 + 로그
+    IF v_new_fare <> v_old_fare THEN
+        UPDATE Flight
+           SET current_fare = v_new_fare
+         WHERE flight_id = p_flight_id;
+
+        INSERT INTO DynamicFareLog
+            (flight_id, resv_id, old_fare, new_fare, change_time, trigger_event)
+        VALUES
+            (p_flight_id, p_resv_id, v_old_fare, v_new_fare, NOW(), p_trigger_event);
+    END IF;
+END]]></definition>
+         <parameters>
+            <parameter mode="IN" name="p_flight_id" type="int"/>
+            <parameter mode="IN" name="p_resv_id" type="int"/>
+            <parameter mode="IN" name="p_trigger_event" type="varchar(50)"/>
+         </parameters>
+      </routine>
+   </routines>
+</database>

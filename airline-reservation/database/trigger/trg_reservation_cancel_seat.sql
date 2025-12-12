@@ -8,25 +8,35 @@ CREATE TRIGGER trg_reservation_cancel_seat
 AFTER UPDATE ON Reservation
 FOR EACH ROW
 BEGIN
-    -- DECLARE 문은 BEGIN 바로 아래에서만!
     DECLARE v_aircraft_id CHAR(10);
 
-    -- BOOKED → CANCELLED 일 때만 동작
     IF OLD.status = 'BOOKED' AND NEW.status = 'CANCELLED' THEN
 
-        -- 1. flight_id로 aircraft_id 가져오기
-        SELECT aircraft_id
-        INTO v_aircraft_id
+        -- 좌석 상태 복구
+        SELECT aircraft_id INTO v_aircraft_id
         FROM Flight
         WHERE flight_id = NEW.flight_id;
 
-        -- 2. 좌석 상태를 AVAILABLE 로 변경
         UPDATE Seat
         SET status = 'AVAILABLE'
         WHERE aircraft_id = v_aircraft_id
           AND seat_no = NEW.seat_no;
 
+        -- ★ 결제 금액을 매출에서 제외 (0원 처리 + 상태 변경)
+        UPDATE Payment
+        SET amount = 0,
+            status = 'CANCELLED'
+        WHERE resv_id = NEW.resv_id;
+
+        -- ★ 요금 재계산 (점유율 감소 반영)
+        CALL sp_recalculate_fare(
+            NEW.flight_id,
+            NEW.resv_id,
+            'CANCEL_RESERVATION'
+        );
+
     END IF;
 END$$
+
 
 DELIMITER ;
